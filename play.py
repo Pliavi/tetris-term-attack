@@ -13,10 +13,6 @@ def new_board(pattern):
     new_board[index] = line
   return new_board
 
-def print_board(board, next_line = None, steps = 1):
-  os.system('cls' if os.name == 'nt' else 'clear')
-  for index, line in enumerate(reversed(board)):
-    print(*line, sep='')
 
 def update_board(board):
   moved = False

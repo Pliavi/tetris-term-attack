@@ -1,17 +1,29 @@
-import time, os, random
+import random
+from resources import *
+from helpers import *
+import readchar
 
 
-def add_line(board):
-  line = [s[random.randint(1,5)] for x in range(len(board[0]))]
-  board.insert(0, line)
-  del board[-1]
-  return board
+def add_line_below(board):
+    line_size = len(board[0])
+    line = [blocks[random.randint(1, 5)] for i in range(line_size)]
+    board.insert(0, line)
+
+    return board
+
+
+def remove_line_above(board):
+    del board[-1]
+
+    return board
+
 
 def new_board(pattern):
-  new_board = [[s[0] for x in range(6)] for y in range(5)]
-  for index, line in enumerate(reversed(pattern)):
-    new_board[index] = line
-  return new_board
+    new_board = [[white_block for x in range(6)] for y in range(5)]
+    for index, line in enumerate(reversed(pattern)):
+        new_board[index] = line
+
+    return new_board
 
 
 def run_in_board(board, callback):
@@ -78,55 +90,77 @@ def check_for_match(board, row, row_index, cell, cell_index):
 
 
 def move_piece(board, piece, side):
-  x, y = 1, 0
-  if piece[x] + side >= 0 \
-    and piece[x] + side < len(board[0]):
-      move_to = board[piece[y]][piece[x] + side]
-      board[piece[y]][piece[x] + side] = board[piece[y]][piece[x]]
-      board[piece[y]][piece[x]] = move_to
-  board = update_board(board)
-  print('moved: ', piece[x],',', piece[y], ' to ', 'left' if side == -1 else 'right', sep="")
-  return board
+    x, y = 1, 0
+    if piece[x] + side >= 0 \
+            and piece[x] + side < len(board[0]):
+        move_to = board[piece[y]][piece[x] + side]
+        board[piece[y]][piece[x] + side] = board[piece[y]][piece[x]]
+        board[piece[y]][piece[x]] = move_to
+    board = update_board(board)
 
-def check_for_match(board):
-  changed = False
-  for row_i, row in enumerate(board):
-    for col_i, cell in enumerate(row):
-      if cell != s[0]:
-        h_matching = 1
-        v_matching = 1
-        matches = [[row_i, col_i]]
-        while col_i + h_matching < len(board[row_i]) and board[row_i][col_i + h_matching] == cell:
-          matches.append([row_i, col_i + h_matching])
-          h_matching += 1
-        while row_i + v_matching < len(board) and board[row_i + v_matching][col_i] == cell:
-          matches.append([row_i + v_matching, col_i])
-          v_matching += 1
-        if(h_matching > 2 or v_matching > 2):
-          for match in matches:
-            board[match[0]][match[1]] = s[0]
-          board = update_board(board)
-          changed = True
-  return changed, board
+    return board
 
+
+def move_cursor(pressed_key, cursor):
+    x, y = 1, 0
+
+    if pressed_key == readchar.key.UP:
+        cursor[y] += 1
+    if pressed_key == readchar.key.DOWN:
+        cursor[y] -= 1
+    if pressed_key == readchar.key.LEFT:
+        cursor[x] -= 1
+    if pressed_key == readchar.key.RIGHT:
+        cursor[x] += 1
+
+    return cursor
+
+
+def playable_game():
+    cursor = [0, 0]
+    board = new_board([
+        [blocks[0], blocks[0], blocks[0], blocks[0], blocks[1], blocks[0]],
+        [blocks[0], blocks[3], blocks[1], blocks[0], blocks[5], blocks[1]],
+        [blocks[0], blocks[3], blocks[3], blocks[5], blocks[5], blocks[1]],
+        [blocks[0], blocks[2], blocks[4], blocks[1], blocks[2], blocks[2]]
+    ])
+
+    while True:
+        pressed_key = readchar.readkey()
+        if(pressed_key == readchar.key.CTRL_C or pressed_key == readchar.key.CTRL_D):
+            break
+        cursor = move_cursor(pressed_key, cursor)
+        update_screen(board, cursor)
+
+
+# TODO: REMOVE THIS, ONLY FOR TEST
 def auto_game():
-  board = new_board([
-    [s[0], s[0], s[0], s[0], s[1], s[0]],
-    [s[0], s[3], s[1], s[0], s[5], s[1]],
-    [s[0], s[3], s[3], s[5], s[5], s[1]],
-    [s[0], s[2], s[4], s[1], s[2], s[2]]
-  ])
-  #[row, col]
-  move_piece(board, [0,1], 1)
-  move_piece(board, [0,2], 1)
-  move_piece(board, [1,4], -1)
-  move_piece(board, [1,3], -1)
-  move_piece(board, [1,2], -1)
-  move_piece(board, [1,1], -1)
-  move_piece(board, [0,0], 1)
-  move_piece(board, [0,1], 1)
-  move_piece(board, [1,5], -1)
-  move_piece(board, [1,4], -1)
+    board = new_board([
+        [blocks[0], blocks[0], blocks[0], blocks[0], blocks[1], blocks[0]],
+        [blocks[0], blocks[3], blocks[1], blocks[0], blocks[5], blocks[1]],
+        [blocks[0], blocks[3], blocks[3], blocks[5], blocks[5], blocks[1]],
+        [blocks[0], blocks[2], blocks[4], blocks[1], blocks[2], blocks[2]]
+    ])
 
-os.system('cls' if os.name == 'nt' else 'clear')
-auto_game()
+    sides = {"left": -1, "right": 1}
+    plays = [
+        #[y, x]
+        {"piece": [0, 1], "side": sides["right"]},
+        {"piece": [0, 2], "side": sides["right"]},
+        {"piece": [1, 4], "side": sides["left"]},
+        {"piece": [1, 3], "side": sides["left"]},
+        {"piece": [1, 2], "side": sides["left"]},
+        {"piece": [1, 1], "side": sides["left"]},
+        {"piece": [0, 0], "side": sides["right"]},
+        {"piece": [0, 1], "side": sides["right"]},
+        {"piece": [1, 5], "side": sides["left"]},
+        {"piece": [1, 4], "side": sides["left"]},
+    ]
+
+    for play in plays:
+        board = move_piece(board, play["piece"], play["side"])
+
+
+clear_screen()
+# auto_game()
+playable_game()

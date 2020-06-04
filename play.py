@@ -1,15 +1,5 @@
 import time, os, random
 
-s = [ "   "," ✲ "," ▲ "," ♥ "," ● "," ◆ " ]
-if os.environ.get('TERM', ''):
-  s = [
-    "   ",
-    "\033[103m\033[33m ✲ \033[0m",
-    "\033[104m\033[34m ▲ \033[0m",
-    "\033[101m\033[31m ♥ \033[0m",
-    "\033[102m\033[32m ● \033[0m",
-    "\033[105m\033[35m ◆ \033[0m"
-  ]
 
 def add_line(board):
   line = [s[random.randint(1,5)] for x in range(len(board[0]))]

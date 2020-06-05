@@ -114,6 +114,11 @@ def move_cursor(pressed_key, cursor):
     return cursor
 
 
+def swap(board, pressed_key, cursor):
+    if pressed_key == readchar.key.SPACE:
+        move_piece(board, cursor)
+
+
 def playable_game():
     ticks = 0
     cursor = [0, 0]
@@ -129,6 +134,7 @@ def playable_game():
         if(pressed_key == readchar.key.CTRL_C or pressed_key == readchar.key.CTRL_D):
             break
         cursor = move_cursor(pressed_key, cursor)
+        swap(board, pressed_key, cursor)
         update_screen(board, cursor)
         ticks += 1
 
@@ -149,6 +155,4 @@ print("""
     `-' `-'`----'  `--'
 """)
 
-clear_screen()
-# auto_game()
 playable_game()

@@ -117,6 +117,7 @@ def move_cursor(pressed_key, cursor):
 
 
 def playable_game():
+    ticks = 0
     cursor = [0, 0]
     board = new_board([
         [blocks[0], blocks[0], blocks[0], blocks[0], blocks[1], blocks[0]],
@@ -126,11 +127,15 @@ def playable_game():
     ])
 
     while True:
+        if ticks % 20 == 0:
+            board = add_line_below(board)
+            board = remove_line_above(board)
         pressed_key = readchar.readkey()
         if(pressed_key == readchar.key.CTRL_C or pressed_key == readchar.key.CTRL_D):
             break
         cursor = move_cursor(pressed_key, cursor)
         update_screen(board, cursor)
+        ticks += 1
 
 
 clear_screen()

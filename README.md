@@ -7,6 +7,11 @@ It only has the `readchar` dependency, install it by using:
 pip install readchar
 ```
 
+and run it by using
+```
+python play.py
+```
+
 
 ![](./docs/game.gif)
 

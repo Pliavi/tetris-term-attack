@@ -1,6 +1,7 @@
 import os
 import time
 import re
+from resources import generate_title, colors
 
 
 def clear_screen(): os.system('cls' if os.name == 'nt' else 'clear')
@@ -8,6 +9,7 @@ def clear_screen(): os.system('cls' if os.name == 'nt' else 'clear')
 
 def update_screen(board, cursor=[0, 0]):
     clear_screen()
+    print(generate_title(), sep="")
     for y_i, y in enumerate(reversed(board)):
         for x_i, x in enumerate(y):
             if x_i == 0:

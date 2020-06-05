@@ -18,10 +18,12 @@ def remove_line_above(board):
     return board
 
 
-def new_board(pattern):
-    new_board = [[white_block for x in range(6)] for y in range(5)]
-    for index, line in enumerate(reversed(pattern)):
-        new_board[index] = line
+def new_board(pattern=None):
+    new_board = [[white_block for x in range(6)] for y in range(10)]
+
+    if pattern:
+        for index, line in enumerate(reversed(pattern)):
+            new_board[index] = line
 
     return new_board
 

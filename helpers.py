@@ -18,4 +18,3 @@ def update_screen(board, cursor=[0, 0]):
             print(x, sep='', end="")
 
         print()
-    time.sleep(.5)

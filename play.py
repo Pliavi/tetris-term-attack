@@ -54,20 +54,20 @@ def update_board(board):
 
 
 def check_for_drop(board, row, row_index, cell, cell_index):
-    moved = False
+    dropped = False
     last_empty_space = row_index
     if board[row_index][cell_index] != white_block:
         def has_white_space_below(
         ): return board[last_empty_space - 1][cell_index] == white_block
 
-        moved = has_white_space_below()
+        dropped = has_white_space_below()
         while has_white_space_below() and last_empty_space > 0:
             last_empty_space -= 1
 
         board[row_index][cell_index] = white_block
         board[last_empty_space][cell_index] = cell
 
-    return moved, board
+    return dropped, board
 
 
 def check_for_match(board, row, row_index, cell, cell_index):

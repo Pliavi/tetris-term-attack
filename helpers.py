@@ -12,10 +12,10 @@ def update_screen(board, cursor=[0, 0]):
         for x_i, x in enumerate(y):
             # print(y_i)
             if(cursor[0] == (len(board)-y_i-1) and cursor[1] == x_i):
-                print("\033[5m" + x.replace(" ", "[", 1) + "\033[0m", sep='', end="")
-            elif(cursor[0] == (len(board)-y_i-1) and cursor[1] + 1 == x_i ):
-                print("\033[5m" + re.sub(r" [^ ]*$", "]", x) + "\033[0m", sep='', end="")
-            else:
-                print(x, sep='', end="")
+                x = "\033[5m" + x.replace(" ", "[", 1) + "\033[0m"
+            elif(cursor[0] == (len(board)-y_i-1) and cursor[1] + 1 == x_i):
+                x = "\033[5m" + re.sub(r" [^ ]*$", "]", x) + "\033[0m"
+            print(x, sep='', end="")
+
         print()
     time.sleep(.5)

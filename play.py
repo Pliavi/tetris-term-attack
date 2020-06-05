@@ -119,12 +119,9 @@ def move_cursor(pressed_key, cursor):
 def playable_game():
     ticks = 0
     cursor = [0, 0]
-    board = new_board([
-        [blocks[0], blocks[0], blocks[0], blocks[0], blocks[1], blocks[0]],
-        [blocks[0], blocks[3], blocks[1], blocks[0], blocks[5], blocks[1]],
-        [blocks[0], blocks[3], blocks[3], blocks[5], blocks[5], blocks[1]],
-        [blocks[0], blocks[2], blocks[4], blocks[1], blocks[2], blocks[2]]
-    ])
+    board = new_board()
+    for i in range(5):
+        add_line_below(board)
 
     while True:
         if ticks % 20 == 0:

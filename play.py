@@ -87,7 +87,7 @@ def check_for_match(board, row, row_index, cell, cell_index):
     return matched, board
 
 
-def move_piece(board, piece, side):
+def move_piece(board, piece, side=1):
     x, y = 1, 0
     if piece[x] + side >= 0 \
             and piece[x] + side < len(board[0]):

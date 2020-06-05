@@ -133,33 +133,21 @@ def playable_game():
         update_screen(board, cursor)
 
 
-# TODO: REMOVE THIS, ONLY FOR TEST
-def auto_game():
-    board = new_board([
-        [blocks[0], blocks[0], blocks[0], blocks[0], blocks[1], blocks[0]],
-        [blocks[0], blocks[3], blocks[1], blocks[0], blocks[5], blocks[1]],
-        [blocks[0], blocks[3], blocks[3], blocks[5], blocks[5], blocks[1]],
-        [blocks[0], blocks[2], blocks[4], blocks[1], blocks[2], blocks[2]]
-    ])
-
-    sides = {"left": -1, "right": 1}
-    plays = [
-        #[y, x]
-        {"piece": [0, 1], "side": sides["right"]},
-        {"piece": [0, 2], "side": sides["right"]},
-        {"piece": [1, 4], "side": sides["left"]},
-        {"piece": [1, 3], "side": sides["left"]},
-        {"piece": [1, 2], "side": sides["left"]},
-        {"piece": [1, 1], "side": sides["left"]},
-        {"piece": [0, 0], "side": sides["right"]},
-        {"piece": [0, 1], "side": sides["right"]},
-        {"piece": [1, 5], "side": sides["left"]},
-        {"piece": [1, 4], "side": sides["left"]},
-    ]
-
-    for play in plays:
-        board = move_piece(board, play["piece"], play["side"])
-
+clear_screen()
+print("""
+.----. .----. .----. .----. .----.
+| ()  )| ()  )| (_  ( (__  ( (__
+| .--' | .-. \| (__ .-._) ).-._) )
+`-'    `-' `-'`----'`----' `----'
+      .--.  .-. .-..-.  .-.
+     / () \ |  `| | \ \/ /
+    /  /\  \| |\  |  )  (
+    `-'  `-'`-' `-'  `--'
+    .-. .-..----..-.  .-.
+    | |/ / | (_   \ \/ /
+    | |\ \ | (__   )  (
+    `-' `-'`----'  `--'
+""")
 
 clear_screen()
 # auto_game()

@@ -1,4 +1,14 @@
-white_block = "   "
+from enum import IntEnum
+
+class BlockIndex(IntEnum):
+    EMPTY = 0
+    STAR = 1
+    TRIANGLE = 2
+    HEART = 3
+    CIRCLE = 4
+    DIAMOND = 5
+
+empty_block = "   "
 star_block = "\033[103m\033[97m ✲ \033[0m"
 triangle_block = "\033[104m\033[97m ▲ \033[0m"
 heart_block = "\033[101m\033[97m ♥ \033[0m"
@@ -6,7 +16,7 @@ circle_block = "\033[102m\033[97m ● \033[0m"
 diamond_block = "\033[105m\033[97m ◆ \033[0m"
 
 blocks = [
-    white_block,
+    empty_block,
     star_block,
     triangle_block,
     heart_block,
@@ -42,6 +52,7 @@ a(_   _)zb| (_z  c| ()  )zd|  `.'  |e| |d|  `| |z c/ () \z b| |z
       c/  /\  \z e| |z    a| |z d/  /\  \zb\     )za| |\ \z
       c`-'  `-'z e`-'z    a`-'z d`-'  `-'z b`---'z a`-' `-'z
 """
+
 
 def generate_title():
     colored_title = title

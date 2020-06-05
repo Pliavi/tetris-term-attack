@@ -1,5 +1,7 @@
 # Tetris Terminal Attack
-## It's started as a base for a non-terminal game, but I got a bit excited :laughing:
+## It started as a base for a non-terminal game, but I got a bit excited :laughing:
+
+![](./docs/game.gif)
 
 ### Dependencies
 It only has the `readchar` dependency, install it by using:
@@ -7,11 +9,12 @@ It only has the `readchar` dependency, install it by using:
 pip install readchar
 ```
 
-and run it by using
+### How to run
+Run it by using
 ```
 python play.py
 ```
 
-
-![](./docs/game.gif)
-
+### How to play
+ - <kbd>Arrows</kbd> to move
+ - <kbd>Space</kbd> to swap

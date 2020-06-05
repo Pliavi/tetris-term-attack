@@ -43,12 +43,8 @@ def run_in_board(board, callback):
 
 
 def update_board(board):
-    checks = [check_for_drop, check_for_match]
-
-    for check_function in checks:
-        need_screen_update, board = run_in_board(board, check_function)
-        if need_screen_update:
-            update_screen(board)
+    need_screen_update, board = run_in_board(board, check_for_drop)
+    need_screen_update, board = run_in_board(board, check_for_match)
 
     return board
 

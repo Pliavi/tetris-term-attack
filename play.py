@@ -124,8 +124,10 @@ def playable_game():
     cursor = [0, 0]
     board = new_board()
     for i in range(5):
-        add_line_below(board)
+        board = add_line_below(board)
 
+    board = update_board(board)
+    
     while True:
         if ticks % 20 == 0:
             board = add_line_below(board)

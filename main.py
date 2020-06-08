@@ -89,21 +89,34 @@ class Game(object):
                 while True:
                     next_possibly_empty_row -= 1
                     if self.board[next_possibly_empty_row][cell_index] != BlockIndex.EMPTY:
-                        self.frame_stack.append([
-                            [row_index, cell_index, BlockIndex.EMPTY],
-                            [next_possibly_empty_row, cell_index, cell]
-                        ])
-                        break
-            # self.frame_stack = [row_index][cell_index] = BlockIndex.EMPTY
-            # self.frame_stack = [last_empty_row][cell_index] = cell
-                    
-        self.run_in_board()
+    def swap_piece(self):
+        piece_position = self.cursor_pos
 
-    def move_piece(self):
-        pass
+        current_piece_row = piece_position[Axis.ROW]
+        current_piece_col = piece_position[Axis.COL]
 
-    def move_cursor(self):
-        pass
+        current_piece = self.board[current_piece_row][current_piece_col]
+        swap_piece = self.board[current_piece_row][current_piece_col + 1]
+
+        self.action_queue.append({
+            "action": "piece_swap",
+            "diffs": [
+                [current_piece_row, current_piece_col + 1, current_piece],
+                [current_piece_row, current_piece_col, swap_piece]
+            ]
+        })
+
+    def move_cursor(self, pressed_key):
+        if pressed_key == readchar.key.UP:
+            self.cursor_pos[Axis.COL] += 1
+        if pressed_key == readchar.key.DOWN:
+            self.cursor_pos[Axis.COL] -= 1
+        if pressed_key == readchar.key.LEFT:
+            self.cursor_pos[Axis.ROW] -= 1
+        if pressed_key == readchar.key.RIGHT:
+            self.cursor_pos[Axis.ROW] += 1
+
+        self.action_queue.append({"action": "cursor_updated"})
 
     def play(self):  # aka the update-loop method
         pass

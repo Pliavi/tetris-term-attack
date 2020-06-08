@@ -1,9 +1,11 @@
 import random
+import time
+import readchar
 from resources import *
 from helpers import *
-import readchar
 from typing import List
 from enum import IntEnum
+from itertools import chain
 
 
 class Axis(IntEnum):
@@ -12,8 +14,8 @@ class Axis(IntEnum):
 
 
 class Game(object):
-    """ 
-        frame_stack: is the diff stack in the board that 
+    """
+        action_queue: is the diff queue in the board that
                      is dispatched each "frame"
     """
     board: List[List[int]] = []
@@ -21,7 +23,15 @@ class Game(object):
     cursor_pos: List[int] = [0, 0]
     ticks: int = 0
     game_finished: bool = False
-    frame_stack: List[List[int]] = None
+    action_queue: List[List[int]] = []
+    controller_keys = {
+        "move": [
+            readchar.key.UP,
+            readchar.key.RIGHT,
+            readchar.key.DOWN,
+            readchar.key.LEFT,
+        ]
+    }
 
     def __init__(self, board_size=[15, 6]):
         self.board_size = board_size
@@ -73,22 +83,33 @@ class Game(object):
         pass
 
     def run_in_board(self, callback_to_cells=None, callback_to_rows=None):
+        diffs = []
         for row_index, row in enumerate(self.board):
             if callback_to_rows:
                 callback_to_rows(row_index, row)
             for cell_index, cell in enumerate(self.board[row_index]):
                 if callback_to_cells:
-                    callback_to_cells(cell_index, cell, row_index, row)
+                    diffs.append(callback_to_cells(
+                        cell_index, cell, row_index, row))
+        return chain.from_iterable(diffs)
 
-    def do_drops(self):
-        dropped = False
-        def check_drops(cell_index, cell, row_index, line):
+    def queue_drops(self):
+        def do_drops(cell_index, cell, row_index, line):
             is_first_row = row_index == 0
             if not(is_first_row) and board[row_index][cell_index] != BlockIndex.EMPTY:
                 next_possibly_empty_row = row_index
-                while True:
+                while True:  # NÃO EXISTE DO..WHILE EM PYTHON!!
                     next_possibly_empty_row -= 1
                     if self.board[next_possibly_empty_row][cell_index] != BlockIndex.EMPTY:
+                        return [[row_index, cell_index, BlockIndex.EMPTY],
+                                [next_possibly_empty_row, cell_index, cell]]
+
+        diffs = self.run_in_board(do_drops)
+        self.action_queue.append({
+            "action": "piece_drop",
+            "diffs": diffs
+        })
+
     def swap_piece(self):
         piece_position = self.cursor_pos
 
@@ -136,4 +157,4 @@ class Game(object):
             # print(self.action_queue)
 
 
-game = Game()
+Game([5, 6]).play()

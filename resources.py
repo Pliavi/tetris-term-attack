@@ -51,6 +51,8 @@ a(_   _)zb| (_z  c| ()  )zd|  `.'  |e| |d|  `| |z c/ () \z b| |z
        c/ () \ze(_   _)za(_   _)zd/ () \z b/  ___)za| |/ /z
       c/  /\  \z e| |z    a| |z d/  /\  \zb\     )za| |\ \z
       c`-'  `-'z e`-'z    a`-'z d`-'  `-'z b`---'z a`-' `-'z
+
+           \033[5m=== PRESS ANY KEY TO START ===\033[0m
 """
 
 

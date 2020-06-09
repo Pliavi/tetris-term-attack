@@ -108,19 +108,21 @@ class Game(object):
     def queue_drops(self):
         def do_drops(cell_index, cell, row_index, line):
             is_first_row = row_index == 0
-            if not(is_first_row) and board[row_index][cell_index] != BlockIndex.EMPTY:
+            if not(is_first_row) and self.board[row_index][cell_index] != BlockIndex.EMPTY:
                 next_possibly_empty_row = row_index
-                while True:  # NÃO EXISTE DO..WHILE EM PYTHON!!
+                while next_possibly_empty_row > 0 and self.board[next_possibly_empty_row - 1][cell_index] == BlockIndex.EMPTY:
                     next_possibly_empty_row -= 1
-                    if self.board[next_possibly_empty_row][cell_index] != BlockIndex.EMPTY:
-                        return [[row_index, cell_index, BlockIndex.EMPTY],
-                                [next_possibly_empty_row, cell_index, cell]]
+                if next_possibly_empty_row != row_index:
+                    return [[row_index, cell_index, BlockIndex.EMPTY],
+                            [next_possibly_empty_row, cell_index, cell]]
 
         diffs = self.run_in_board(do_drops)
-        self.action_queue.append({
-            "action": "piece_drop",
-            "diffs": diffs
-        })
+
+        if len(diffs):
+            self.action_queue.append({
+                "action": "piece_drop",
+                "diffs": diffs
+            })
 
     def swap_piece(self):
         piece_position = self.cursor_pos

@@ -65,19 +65,18 @@ class Game(object):
         pass
 
     def dispatch_actions(self):
-        print(self.action_queue)
-        for action in self.action_queue:
+        for action_index, action in enumerate(self.action_queue):
             action_name = action["action"]
             if action_name == "piece_drop":
-                pass
+                for diff in action["diffs"]:
+                    self.board[diff[0]][diff[1]] = diff[2]
             if action_name == "piece_swap":
                 for diff in action["diffs"]:
                     self.board[diff[0]][diff[1]] = diff[2]
-                # TODO: Check about "del self.action_queue[-1]"
-                self.action_queue.pop()
-                self.print_screen()
             if action_name == "cursor_updated":
                 pass
+        self.action_queue = []
+        self.print_screen()
 
     def add_line_below(self,):
         line = []

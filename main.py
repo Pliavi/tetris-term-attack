@@ -99,9 +99,11 @@ class Game(object):
                 callback_to_rows(row_index, row)
             for cell_index, cell in enumerate(self.board[row_index]):
                 if callback_to_cells:
-                    diffs.append(callback_to_cells(
-                        cell_index, cell, row_index, row))
-        return chain.from_iterable(diffs)
+                    diff = callback_to_cells(cell_index, cell, row_index, row)
+                    if diff:
+                        diffs.append(diff)
+
+        return list(chain.from_iterable(diffs))
 
     def queue_drops(self):
         def do_drops(cell_index, cell, row_index, line):

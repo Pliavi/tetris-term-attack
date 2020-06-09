@@ -154,10 +154,10 @@ class Game(object):
         self.action_queue.append({"action": "cursor_updated"})
 
     def play(self):  # aka the update-loop method
-        # for i in range(5):
-        #     self.add_line_below()
-        #     self.remove_line_above()
-        self.board[0][0] = 2
+        for i in range(5):
+            self.add_line_below()
+            self.remove_line_above()
+
         while True:
             pressed_key = readchar.readkey()
             if(pressed_key == readchar.key.CTRL_C or pressed_key == readchar.key.CTRL_D):
@@ -166,9 +166,8 @@ class Game(object):
                 self.swap_piece()
             if(pressed_key in self.controller_keys["move"]):
                 self.move_cursor(pressed_key)
-
+            self.queue_drops()
             self.dispatch_actions()
-            # print(self.action_queue)
 
 
 Game([5, 6]).play()

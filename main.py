@@ -1,8 +1,9 @@
 import random
 import time
 import readchar
-from resources import *
-from helpers import *
+import Block
+from Block import *
+from Helpers import *
 from typing import List
 from enum import IntEnum
 from itertools import chain

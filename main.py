@@ -47,8 +47,18 @@ class Game(object):
         pass
 
     def print_screen(self):
-        for index, line in enumerate(self.board):
-            print(f"{index:2}|", *line)
+        clear_screen()
+        for y_i, line in enumerate(reversed(self.board)):
+            print(f"{y_i:2}|", end="")
+            for x_i, cell in enumerate(line):
+                if(self.cursor_pos[Axis.ROW] == (len(self.board) - y_i - 1) and self.cursor_pos[Axis.COL] == x_i):
+                    block = Block.cursor_block(Side.LEFT, cell)
+                elif(self.cursor_pos[Axis.ROW] == (len(self.board) - y_i - 1) and self.cursor_pos[Axis.COL] + 1 == x_i):
+                    block = Block.cursor_block(Side.RIGHT, cell)
+                else:
+                    block = Block.by_index(cell)
+                print(block, end="")
+            print()
 
     def update_board(self,):
         pass

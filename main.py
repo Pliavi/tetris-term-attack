@@ -143,13 +143,13 @@ class Game(object):
 
     def move_cursor(self, pressed_key):
         if pressed_key == readchar.key.UP:
-            self.cursor_pos[Axis.COL] += 1
-        if pressed_key == readchar.key.DOWN:
-            self.cursor_pos[Axis.COL] -= 1
-        if pressed_key == readchar.key.LEFT:
-            self.cursor_pos[Axis.ROW] -= 1
-        if pressed_key == readchar.key.RIGHT:
             self.cursor_pos[Axis.ROW] += 1
+        if pressed_key == readchar.key.DOWN:
+            self.cursor_pos[Axis.ROW] -= 1
+        if pressed_key == readchar.key.LEFT:
+            self.cursor_pos[Axis.COL] -= 1
+        if pressed_key == readchar.key.RIGHT:
+            self.cursor_pos[Axis.COL] += 1
 
         self.action_queue.append({"action": "cursor_updated"})
 
